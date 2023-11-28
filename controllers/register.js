@@ -1,4 +1,5 @@
 const handleRegister = (req,res,db,bcrypt) => {
+	console.log(req.body);
 	const { email,name,password} = req.body;
 	if(!email || !name || !password) {
 		return res.status(400).json('incorrect form submission');
@@ -20,13 +21,17 @@ const handleRegister = (req,res,db,bcrypt) => {
 						joined: new Date()
 					})
 					.then(user => {
+						console.log("hi");
 						res.json(user[0]);
 					})
 			})
 			.then(trx.commit)
 			.catch(trx.rollback)
 		})
-		.catch(err => res.status(400).json('unable to register'))
+		.catch(err => {
+			console.log(err); 
+			res.status(400).json('unable to register');
+		})
 }
 
 module.exports = {
