@@ -1,4 +1,19 @@
-const handleSignin = (db,bcrypt) => (req, res) => {
+const knex = require('knex');
+const bcrypt = require('bcrypt-nodejs');
+
+const db = knex({
+	client: 'pg',
+	connection: {
+	  host : '127.0.0.1',
+	  port : 3306,
+	  user : 'postgres',
+	  password : '',
+	  database : 'postgres'
+	}
+  });
+
+const handleSignin = (req, res) => {
+	console.log(req.body);
 	const {email, password} = req.body;
 	if(!email || !password) {
 		return res.status(400).json('incorrect form submission');
@@ -11,9 +26,10 @@ const handleSignin = (db,bcrypt) => (req, res) => {
 				return db.select('*').from('users')
 					.where('email', '=', email)
 					.then(user => {
-						re.json(user[0])
+						console.log(user[0]);
+						res.json(user[0])
 					})
-					.catch(err => res.json.status(400).json('unable to get user'))
+					.catch(err => {console.log(err);   res.json.status(400).json('unable to get user');})
 			}else {
 				res.status(400).json('wrong credentials')
 			}
