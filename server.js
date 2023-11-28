@@ -27,7 +27,9 @@ app.use(express.json());
 
 app.get('/', (req, res)=> { res.send(db.users) })
 // app.post('/signin', signin.handleSignin(db, bcrypt))
-app.post('/signin',(req,res)=> {signin.handleSignin(db,bcrypt)})
+//app.post('/signin',(req,res)=> {signin.handleSignin(db,bcrypt)})
+// Other changes are in /controllers/signin
+app.post('/signin',signin.handleSignin)
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
 app.put('/image', (req, res) => { image.handleImage(req, res, db)})
